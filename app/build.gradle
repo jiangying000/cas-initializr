@@ -23,6 +23,14 @@ repositories {
     }
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDirs rootProject.file("ui/build")
+        }
+    }
+}
+
 dependencyManagement {
     imports {
         mavenBom "io.spring.initializr:initializr-bom:${springInitializrVersion}"
@@ -138,4 +146,6 @@ task copyWrapperExecutables(type: Copy) {
 }
 
 rootProject.tasks["wrapper"].finalizedBy([copyWrapper, copyWrapperExecutables]) 
-build.dependsOn([copyWrapper, copyWrapperExecutables])
+
+def appNpmBuild = rootProject.findProject(':ui').getTasksByName("appNpmBuild", false)
+build.dependsOn(appNpmBuild + [copyWrapper, copyWrapperExecutables])
