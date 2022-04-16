@@ -4,6 +4,7 @@ import org.apereo.cas.initializr.config.CasInitializrProperties;
 import org.apereo.cas.initializr.event.CasInitializrEventListener;
 import org.apereo.cas.initializr.info.DependencyAliasesInfoContributor;
 import org.apereo.cas.initializr.rate.RateLimitInterceptor;
+import org.apereo.cas.initializr.web.InitializrHomeController;
 import org.apereo.cas.initializr.web.OverlayProjectGenerationController;
 import org.apereo.cas.initializr.web.OverlayProjectRequestToDescriptionConverter;
 import org.apereo.cas.initializr.web.SupportedVersionsEndpoint;
@@ -13,6 +14,7 @@ import org.apereo.cas.initializr.web.generator.CasInitializrProjectGenerationInv
 import io.spring.initializr.metadata.InitializrMetadataProvider;
 import io.spring.initializr.web.project.DefaultProjectRequestPlatformVersionTransformer;
 import io.spring.initializr.web.project.ProjectRequestPlatformVersionTransformer;
+import lombok.val;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,10 +23,13 @@ import org.springframework.boot.actuate.info.InfoContributor;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * {@code @ProjectGenerationConfiguration}-annotated types should not be
@@ -60,6 +65,12 @@ public class CasInitializrApplication {
     public HandlerInterceptor rateLimitInterceptor() {
         return new RateLimitInterceptor();
     }
+
+    @Bean
+    public InitializrHomeController homeController() {
+        return new InitializrHomeController();
+    }
+
 
     @Bean
     @Autowired

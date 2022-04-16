@@ -22,7 +22,7 @@ Generate a Docker image from the build:
 CAS Initializr is a Spring Boot application and can be run using the following command:
 
 ```bash
-./gradlew :app:bootRun
+./gradlew bootRun
 ```
 
 Or run the Docker image:
@@ -32,6 +32,13 @@ imageTag=(`./gradlew casVersion --q`) && docker run --rm -p 8080:8080 -t apereo/
 ```
 
 The service will be available on `http://localhost:8080`.
+  
+### User Interface
+
+CAS Initializr provides a modest user interface that can allow one to pick and choose appropriate CAS modules and
+customize other aspects of the resulting CAS overlay visually. 
+  
+Once you have built the application, you may access the user interface at `http://localhost:8080/ui`.
 
 ## Generating a project
 
@@ -83,6 +90,14 @@ curl http://localhost:8080/dependencies
 
 Typically, dependency identifiers match CAS server 
 dependency/module artifact names without the `cas-server-` prefix.
+
+## Supported Versions
+        
+Versions supported by the CAS Initializr can be determined using the following endpoint: 
+
+```bash
+curl http://localhost:8080/actuator/supportedVersions
+``` 
 
 ## Service metadata
 
